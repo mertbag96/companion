@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import AppLogo from '@/components/AppLogo.vue';
 import { wfArgs } from '@/lib/wayfinderArgs';
 import { home } from '@/routes';
 
@@ -26,8 +26,8 @@ defineProps<{
                         <div
                             class="mb-1 flex h-9 w-9 items-center justify-center rounded-md"
                         >
-                            <AppLogoIcon
-                                class="size-9 fill-current text-[var(--foreground)] dark:text-white"
+                            <AppLogo
+                                class="text-2xl fill-current text-black dark:text-white"
                             />
                         </div>
                         <span class="sr-only">{{ title }}</span>
