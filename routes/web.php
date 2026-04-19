@@ -13,7 +13,7 @@ Route::prefix('{locale}')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Home', [
             'canRegister' => Features::enabled(Features::registration()),
-            'translations' => app(LoadTranslationsAction::class)->handle(['website', 'footer', 'header']),
+            'translations' => app(LoadTranslationsAction::class)->handle(['website']),
         ]);
     })->name('home');
 

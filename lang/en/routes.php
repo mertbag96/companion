@@ -2,6 +2,15 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Routes Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used in the routes.
+    |
+    */
+
     'login' => 'login',
     'register' => 'register',
     'logout' => 'logout',
@@ -31,4 +40,5 @@ return [
     'user_two_factor_recovery_b' => 'two-factor-recovery-codes',
 
     'two_factor_challenge' => 'two-factor-challenge',
+
 ];

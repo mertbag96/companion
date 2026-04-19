@@ -123,7 +123,7 @@ This class is the **bridge** between:
 - Root `/` redirects to localized home.
 - **`Route::prefix('{locale}')`** wraps locale-scoped routes.
 - Uses `LaravelLocalization::transRoute('routes.dashboard')` and `LocalizedRoutePaths::pattern('routes.dashboard')` for the dashboard segment.
-- **`LoadTranslationsAction`**: example for **Home** passes `translations` for groups `website`, `footer`, `header`. When you add pages, either pass the same groups + new ones from the controller, or move shared groups to `HandleInertiaRequests` (product decision).
+- **`LoadTranslationsAction`**: example for **Home** passes `translations` for the `website` group (layout header/footer copy lives under `website.layout` in `lang/*/website.php`). When you add pages, either pass the same groups + new ones from the controller, or move shared groups to `HandleInertiaRequests` (product decision).
 
 ### 6.2 `routes/settings.php`
 
@@ -205,7 +205,7 @@ Do **not** pass only `{ locale: page.props.locale }` to Wayfinder helpers for lo
 
 - Translation **groups** are PHP files: e.g. `lang/en/website.php` → nested array.
 - **`LoadTranslationsAction`** loads groups by name and returns them to Inertia as **`translations.{group}.*`**.
-- **`useTranslations()`** (`resources/js/composables/useTranslations.ts`) reads **`page.props.translations`** and supports **dot keys**, e.g. `t('website.home.heading')`.
+- **`useTranslations()`** (`resources/js/composables/useTranslations.ts`) reads **`page.props.translations`** and supports **dot keys** from the root of that tree, e.g. `t('website.home.heading')`, `t('website.layout.header.nav.features')`, `t('website.layout.footer.tagline')`. Fortify auth pages receive the same `website` group (including **`website.auth.{login|register|...}`**) via **`FortifyServiceProvider`**.
 - **Replacements** in strings: `:name` and `{name}` in the PHP string, pass `replacements` as second argument to `t()`.
 
 **When adding a new page with copy:**

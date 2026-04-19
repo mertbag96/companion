@@ -1,36 +1,35 @@
 <script setup lang="ts">
-import { Form, Head, usePage } from '@inertiajs/vue3';
+import { Form, Head, setLayoutProps, usePage } from '@inertiajs/vue3';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { useTranslations } from '@/composables/useTranslations';
 import { wfArgs } from '@/lib/wayfinderArgs';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
-
-defineOptions({
-    layout: {
-        title: 'Verify email',
-        description:
-            'Please verify your email address by clicking on the link we just emailed to you.',
-    },
-});
 
 defineProps<{
     status?: string;
 }>();
 
 const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
+
+const { t } = useTranslations();
+
+setLayoutProps({
+    title: t('website.auth.verify_email.layout_title'),
+    description: t('website.auth.verify_email.layout_description'),
+});
 </script>
 
 <template>
-    <Head title="Email verification" />
+    <Head :title="t('website.auth.verify_email.head_title')" />
 
     <div
         v-if="status === 'verification-link-sent'"
         class="mb-4 text-center text-sm font-medium text-green-600"
     >
-        A new verification link has been sent to the email address you provided
-        during registration.
+        {{ t('website.auth.verify_email.verification_sent') }}
     </div>
 
     <Form
@@ -40,11 +39,11 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
     >
         <Button :disabled="processing" variant="secondary">
             <Spinner v-if="processing" />
-            Resend verification email
+            {{ t('website.auth.verify_email.resend') }}
         </Button>
 
         <TextLink :href="logout(wfArgs(page))" as="button" class="mx-auto block text-sm">
-            Log out
+            {{ t('website.auth.verify_email.log_out') }}
         </TextLink>
     </Form>
 </template>

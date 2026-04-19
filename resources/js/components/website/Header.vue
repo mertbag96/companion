@@ -53,35 +53,35 @@ watch(isMenuOpen, (open) => {
                     prefetch
                     class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
-                    {{ t('header.nav.features') }}
+                    {{ t('website.layout.header.nav.features') }}
                 </Link>
                 <Link
                     :href="home.url(wfArgs(page))"
                     prefetch
                     class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
-                    {{ t('header.nav.pricing') }}
+                    {{ t('website.layout.header.nav.pricing') }}
                 </Link>
                 <Link
                     :href="home.url(wfArgs(page))"
                     prefetch
                     class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
-                    {{ t('header.nav.about') }}
+                    {{ t('website.layout.header.nav.about') }}
                 </Link>
                 <Link
                     :href="home.url(wfArgs(page))"
                     prefetch
                     class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
-                    {{ t('header.nav.blog') }}
+                    {{ t('website.layout.header.nav.blog') }}
                 </Link>
                 <Link
                     :href="home.url(wfArgs(page))"
                     prefetch
                     class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
-                    {{ t('header.nav.help') }}
+                    {{ t('website.layout.header.nav.help') }}
                 </Link>
                 </nav>
 
@@ -98,7 +98,7 @@ watch(isMenuOpen, (open) => {
                         :href="login.url(wfArgs(page))"
                         prefetch
                     >
-                        {{ t('header.actions.login') }}
+                        {{ t('website.layout.header.actions.login') }}
                     </Link>
                 </Button>
 
@@ -110,7 +110,7 @@ watch(isMenuOpen, (open) => {
                         :href="register.url(wfArgs(page))"
                         prefetch
                     >
-                        {{ t('header.actions.get_started') }}
+                        {{ t('website.layout.header.actions.get_started') }}
                     </Link>
                 </Button>
 
@@ -173,7 +173,7 @@ watch(isMenuOpen, (open) => {
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            {{ t('header.nav.features') }}
+                            {{ t('website.layout.header.nav.features') }}
                         </Link>
                         <Link
                             :href="home.url(wfArgs(page))"
@@ -181,7 +181,7 @@ watch(isMenuOpen, (open) => {
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            {{ t('header.nav.pricing') }}
+                            {{ t('website.layout.header.nav.pricing') }}
                         </Link>
                         <Link
                             :href="home.url(wfArgs(page))"
@@ -189,7 +189,7 @@ watch(isMenuOpen, (open) => {
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            {{ t('header.nav.about') }}
+                            {{ t('website.layout.header.nav.about') }}
                         </Link>
                         <Link
                             :href="home.url(wfArgs(page))"
@@ -197,7 +197,7 @@ watch(isMenuOpen, (open) => {
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            {{ t('header.nav.blog') }}
+                            {{ t('website.layout.header.nav.blog') }}
                         </Link>
                         <Link
                             :href="home.url(wfArgs(page))"
@@ -205,7 +205,7 @@ watch(isMenuOpen, (open) => {
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            {{ t('header.nav.help') }}
+                            {{ t('website.layout.header.nav.help') }}
                         </Link>
                 </div>
 
@@ -221,7 +221,7 @@ watch(isMenuOpen, (open) => {
                                 prefetch
                                 @click="closeMenu"
                             >
-                                {{ t('header.actions.login') }}
+                                {{ t('website.layout.header.actions.login') }}
                             </Link>
                         </Button>
                         <Button
@@ -234,7 +234,7 @@ watch(isMenuOpen, (open) => {
                                 prefetch
                                 @click="closeMenu"
                             >
-                                {{ t('header.actions.get_started') }}
+                                {{ t('website.layout.header.actions.get_started') }}
                             </Link>
                         </Button>
                 </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head, usePage } from '@inertiajs/vue3';
+import { Form, Head, setLayoutProps, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -8,17 +8,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { useTranslations } from '@/composables/useTranslations';
 import { wfArgs } from '@/lib/wayfinderArgs';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-
-defineOptions({
-    layout: {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
-    },
-});
 
 defineProps<{
     status?: string;
@@ -27,10 +21,17 @@ defineProps<{
 }>();
 
 const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
+
+const { t } = useTranslations();
+
+setLayoutProps({
+    title: t('website.auth.login.layout_title'),
+    description: t('website.auth.login.layout_description'),
+});
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head :title="t('website.auth.login.head_title')" />
 
     <div
         v-if="status"
@@ -47,7 +48,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
     >
         <div class="grid gap-6">
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="email">{{ t('website.auth.login.email_label') }}</Label>
                 <Input
                     id="email"
                     type="email"
@@ -56,21 +57,21 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                     autofocus
                     :tabindex="1"
                     autocomplete="email"
-                    placeholder="email@example.com"
+                    :placeholder="t('website.auth.login.email_placeholder')"
                 />
                 <InputError :message="errors.email" />
             </div>
 
             <div class="grid gap-2">
                 <div class="flex items-center justify-between">
-                    <Label for="password">Password</Label>
+                    <Label for="password">{{ t('website.auth.login.password_label') }}</Label>
                     <TextLink
                         v-if="canResetPassword"
                         :href="request(wfArgs(page))"
                         class="text-sm"
                         :tabindex="5"
                     >
-                        Forgot password?
+                        {{ t('website.auth.login.forgot_password') }}
                     </TextLink>
                 </div>
                 <PasswordInput
@@ -79,7 +80,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                     required
                     :tabindex="2"
                     autocomplete="current-password"
-                    placeholder="Password"
+                    :placeholder="t('website.auth.login.password_placeholder')"
                 />
                 <InputError :message="errors.password" />
             </div>
@@ -87,7 +88,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
             <div class="flex items-center justify-between">
                 <Label for="remember" class="flex items-center space-x-3">
                     <Checkbox id="remember" name="remember" :tabindex="3" />
-                    <span>Remember me</span>
+                    <span>{{ t('website.auth.login.remember_me') }}</span>
                 </Label>
             </div>
 
@@ -99,7 +100,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                 data-test="login-button"
             >
                 <Spinner v-if="processing" />
-                Log in
+                {{ t('website.auth.login.submit') }}
             </Button>
         </div>
 
@@ -107,8 +108,10 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
             class="text-center text-sm text-muted-foreground"
             v-if="canRegister"
         >
-            Don't have an account?
-            <TextLink :href="register(wfArgs(page))" :tabindex="5">Sign up</TextLink>
+            {{ t('website.auth.login.no_account') }}
+            <TextLink :href="register(wfArgs(page))" :tabindex="5">{{
+                t('website.auth.login.sign_up')
+            }}</TextLink>
         </div>
     </Form>
 </template>

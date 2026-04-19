@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { Form, Head, usePage } from '@inertiajs/vue3';
+import { Form, Head, setLayoutProps, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { useTranslations } from '@/composables/useTranslations';
 import { wfArgs } from '@/lib/wayfinderArgs';
 import { store } from '@/routes/password/confirm';
 
-defineOptions({
-    layout: {
-        title: 'Confirm your password',
-        description:
-            'This is a secure area of the application. Please confirm your password before continuing.',
-    },
-});
-
 const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
+
+const { t } = useTranslations();
+
+setLayoutProps({
+    title: t('website.auth.confirm_password.layout_title'),
+    description: t('website.auth.confirm_password.layout_description'),
+});
 </script>
 
 <template>
-    <Head title="Confirm password" />
+    <Head :title="t('website.auth.confirm_password.head_title')" />
 
     <Form
         v-bind="store.form(wfArgs(page))"
@@ -29,7 +29,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
     >
         <div class="space-y-6">
             <div class="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <Label for="password">{{ t('website.auth.confirm_password.password_label') }}</Label>
                 <PasswordInput
                     id="password"
                     name="password"
@@ -49,7 +49,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                     data-test="confirm-password-button"
                 >
                     <Spinner v-if="processing" />
-                    Confirm password
+                    {{ t('website.auth.confirm_password.submit') }}
                 </Button>
             </div>
         </div>

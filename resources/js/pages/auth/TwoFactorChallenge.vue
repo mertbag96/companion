@@ -9,25 +9,25 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { useTranslations } from '@/composables/useTranslations';
 import { wfArgs } from '@/lib/wayfinderArgs';
 import { store } from '@/routes/two-factor/login';
-import type { TwoFactorConfigContent } from '@/types';
 
-const authConfigContent = computed<TwoFactorConfigContent>(() => {
+const { t } = useTranslations();
+
+const authConfigContent = computed(() => {
     if (showRecoveryInput.value) {
         return {
-            title: 'Recovery code',
-            description:
-                'Please confirm access to your account by entering one of your emergency recovery codes.',
-            buttonText: 'login using an authentication code',
+            title: t('website.auth.two_factor.recovery_title'),
+            description: t('website.auth.two_factor.recovery_description'),
+            buttonText: t('website.auth.two_factor.use_auth_code'),
         };
     }
 
     return {
-        title: 'Authentication code',
-        description:
-            'Enter the authentication code provided by your authenticator application.',
-        buttonText: 'login using a recovery code',
+        title: t('website.auth.two_factor.code_title'),
+        description: t('website.auth.two_factor.code_description'),
+        buttonText: t('website.auth.two_factor.use_recovery_code'),
     };
 });
 
@@ -52,7 +52,7 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
 </script>
 
 <template>
-    <Head title="Two-factor authentication" />
+    <Head :title="t('website.auth.two_factor.head_title')" />
 
     <div class="space-y-6">
         <template v-if="!showRecoveryInput">
@@ -86,11 +86,11 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                     </div>
                     <InputError :message="errors.code" />
                 </div>
-                <Button type="submit" class="w-full" :disabled="processing"
-                    >Continue</Button
-                >
+                <Button type="submit" class="w-full" :disabled="processing">{{
+                    t('website.auth.two_factor.continue')
+                }}</Button>
                 <div class="text-center text-sm text-muted-foreground">
-                    <span>or you can </span>
+                    <span>{{ t('website.auth.two_factor.or_you_can') }}</span>
                     <button
                         type="button"
                         class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
@@ -112,17 +112,17 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                 <Input
                     name="recovery_code"
                     type="text"
-                    placeholder="Enter recovery code"
+                    :placeholder="t('website.auth.two_factor.recovery_placeholder')"
                     :autofocus="showRecoveryInput"
                     required
                 />
                 <InputError :message="errors.recovery_code" />
-                <Button type="submit" class="w-full" :disabled="processing"
-                    >Continue</Button
-                >
+                <Button type="submit" class="w-full" :disabled="processing">{{
+                    t('website.auth.two_factor.continue')
+                }}</Button>
 
                 <div class="text-center text-sm text-muted-foreground">
-                    <span>or you can </span>
+                    <span>{{ t('website.auth.two_factor.or_you_can') }}</span>
                     <button
                         type="button"
                         class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"

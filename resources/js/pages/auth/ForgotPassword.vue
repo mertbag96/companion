@@ -1,31 +1,32 @@
 <script setup lang="ts">
-import { Form, Head, usePage } from '@inertiajs/vue3';
+import { Form, Head, setLayoutProps, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { useTranslations } from '@/composables/useTranslations';
 import { wfArgs } from '@/lib/wayfinderArgs';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
-
-defineOptions({
-    layout: {
-        title: 'Forgot password',
-        description: 'Enter your email to receive a password reset link',
-    },
-});
 
 defineProps<{
     status?: string;
 }>();
 
 const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
+
+const { t } = useTranslations();
+
+setLayoutProps({
+    title: t('website.auth.forgot_password.layout_title'),
+    description: t('website.auth.forgot_password.layout_description'),
+});
 </script>
 
 <template>
-    <Head title="Forgot password" />
+    <Head :title="t('website.auth.forgot_password.head_title')" />
 
     <div
         v-if="status"
@@ -37,14 +38,14 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
     <div class="space-y-6">
         <Form v-bind="email.form(wfArgs(page))" v-slot="{ errors, processing }">
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="email">{{ t('website.auth.forgot_password.email_label') }}</Label>
                 <Input
                     id="email"
                     type="email"
                     name="email"
                     autocomplete="off"
                     autofocus
-                    placeholder="email@example.com"
+                    :placeholder="t('website.auth.forgot_password.email_placeholder')"
                 />
                 <InputError :message="errors.email" />
             </div>
@@ -56,14 +57,14 @@ const page = usePage<{ locale: string; url_route_defaults: Record<string, string
                     data-test="email-password-reset-link-button"
                 >
                     <Spinner v-if="processing" />
-                    Email password reset link
+                    {{ t('website.auth.forgot_password.submit') }}
                 </Button>
             </div>
         </Form>
 
         <div class="space-x-1 text-center text-sm text-muted-foreground">
-            <span>Or, return to</span>
-            <TextLink :href="login(wfArgs(page))">log in</TextLink>
+            <span>{{ t('website.auth.forgot_password.or_return') }}</span>
+            <TextLink :href="login(wfArgs(page))">{{ t('website.auth.forgot_password.log_in') }}</TextLink>
         </div>
     </div>
 </template>

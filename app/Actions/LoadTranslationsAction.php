@@ -8,7 +8,7 @@ namespace App\Actions;
 final class LoadTranslationsAction
 {
     /**
-     * @param  array<int, string>  $groups  Translation file names without path (e.g. "website", "footer").
+     * @param  array<int, string>  $groups  Translation file names without path (e.g. "website").
      * @return array<string, array<string, mixed>>
      */
     public function handle(array $groups): array

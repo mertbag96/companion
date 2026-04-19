@@ -2,6 +2,15 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Routes Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used in the routes.
+    |
+    */
+
     'login' => 'giris-yap',
     'register' => 'kayit-ol',
     'logout' => 'cikis',
@@ -31,4 +40,5 @@ return [
     'user_two_factor_recovery_b' => 'iki-asamali-kurtarma-kodlari',
 
     'two_factor_challenge' => 'iki-asamali-dogrulama-meydani',
+
 ];

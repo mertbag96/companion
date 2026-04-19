@@ -46,14 +46,14 @@ const currentLanguageLabel = computed(
                             <AppLogo />
                         </Link>
                         <p class="text-sm leading-relaxed text-foreground/75">
-                            {{ t('footer.tagline') }}
+                            {{ t('website.layout.footer.tagline') }}
                         </p>
                     </div>
 
                     <div class="grid flex-1 grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                {{ t('footer.columns.product.label') }}
+                                {{ t('website.layout.footer.columns.product.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
@@ -61,7 +61,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.product.links.features') }}
+                                        {{ t('website.layout.footer.columns.product.links.features') }}
                                     </Link>
                                 </li>
                                 <li>
@@ -69,7 +69,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.product.links.pricing') }}
+                                        {{ t('website.layout.footer.columns.product.links.pricing') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -77,7 +77,7 @@ const currentLanguageLabel = computed(
 
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                {{ t('footer.columns.resources.label') }}
+                                {{ t('website.layout.footer.columns.resources.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
@@ -85,7 +85,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.resources.links.blog') }}
+                                        {{ t('website.layout.footer.columns.resources.links.blog') }}
                                     </Link>
                                 </li>
                                 <li>
@@ -93,7 +93,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.resources.links.help') }}
+                                        {{ t('website.layout.footer.columns.resources.links.help') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -101,7 +101,7 @@ const currentLanguageLabel = computed(
 
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                {{ t('footer.columns.company.label') }}
+                                {{ t('website.layout.footer.columns.company.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
@@ -109,7 +109,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.company.links.about') }}
+                                        {{ t('website.layout.footer.columns.company.links.about') }}
                                     </Link>
                                 </li>
                                 <li>
@@ -117,7 +117,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.company.links.contact') }}
+                                        {{ t('website.layout.footer.columns.company.links.contact') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -125,7 +125,7 @@ const currentLanguageLabel = computed(
 
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                {{ t('footer.columns.legal.label') }}
+                                {{ t('website.layout.footer.columns.legal.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
@@ -133,7 +133,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.legal.links.privacy') }}
+                                        {{ t('website.layout.footer.columns.legal.links.privacy') }}
                                     </Link>
                                 </li>
                                 <li>
@@ -141,7 +141,7 @@ const currentLanguageLabel = computed(
                                         :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        {{ t('footer.columns.legal.links.terms') }}
+                                        {{ t('website.layout.footer.columns.legal.links.terms') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -153,7 +153,7 @@ const currentLanguageLabel = computed(
             <div class="border-t border-border/60 py-6">
                 <div class="max-w-[92%] xl:max-w-6xl 2xl:max-w-7xl mx-auto gap-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between">
                     <p class="text-xs text-foreground/60">
-                        {{ t('footer.copyright', { year }) }}
+                        {{ t('website.layout.footer.copyright', { year }) }}
                     </p>
 
                     <DropdownMenu class="">
@@ -196,7 +196,7 @@ const currentLanguageLabel = computed(
                         class="w-full text-center font-black tracking-[-0.078em] text-foreground lowercase"
                         style="font-size: clamp(3.25rem, 17vw, 13.5rem); line-height: 0.88;"
                     >
-                        {{ t('footer.brand') }}
+                        {{ t('website.layout.footer.brand') }}
                     </p>
                 </div>
             </div>
