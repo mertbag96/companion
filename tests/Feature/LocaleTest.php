@@ -19,6 +19,7 @@ test('home page returns expected translation strings for english', function () {
         ->component('Home')
         ->where('translations.website.home.heading', 'Homepage')
         ->where('translations.website.layout.header.nav.features', 'Features')
+        ->where('translations.website.layout.header.theme.system', 'System')
         ->where('translations.website.layout.footer.brand', 'companion.'));
 });
 
@@ -36,6 +37,7 @@ test('home page returns turkish copy when locale is tr', function () {
         ->component('Home')
         ->where('translations.website.home.heading', 'Ana sayfa')
         ->where('translations.website.layout.header.nav.features', 'Özellikler')
+        ->where('translations.website.layout.header.theme.system', 'Sistem')
         ->where('translations.website.layout.footer.brand', 'companion.'));
 });
 

@@ -3,6 +3,30 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="appearance" content="{{ $appearance ?? 'system' }}">
+
+        <script>
+            (function () {
+                var meta = document.querySelector('meta[name="appearance"]');
+                var server = (meta && meta.getAttribute('content')) || 'system';
+                if (server !== 'dark' && server !== 'light' && server !== 'system') {
+                    server = 'system';
+                }
+                var stored = null;
+                try {
+                    stored = localStorage.getItem('appearance');
+                } catch (e) {}
+                var appearance = stored || server;
+                if (appearance !== 'dark' && appearance !== 'light' && appearance !== 'system') {
+                    appearance = 'system';
+                }
+                var dark =
+                    appearance === 'dark' ||
+                    (appearance === 'system' &&
+                        window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.classList.toggle('dark', dark);
+            })();
+        </script>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon-16x16.png" sizes="16x16">

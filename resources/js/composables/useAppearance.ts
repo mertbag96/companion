@@ -56,6 +56,35 @@ const getStoredAppearance = () => {
     return localStorage.getItem('appearance') as Appearance | null;
 };
 
+const getDocumentAppearance = (): Appearance => {
+    if (typeof document === 'undefined') {
+        return 'system';
+    }
+
+    const el = document.querySelector('meta[name="appearance"]');
+    const raw = el?.getAttribute('content');
+
+    if (raw === 'dark' || raw === 'light' || raw === 'system') {
+        return raw;
+    }
+
+    return 'system';
+};
+
+const resolveInitialAppearance = (): Appearance => {
+    const stored = getStoredAppearance();
+
+    if (
+        stored === 'dark' ||
+        stored === 'light' ||
+        stored === 'system'
+    ) {
+        return stored;
+    }
+
+    return getDocumentAppearance();
+};
+
 const prefersDark = (): boolean => {
     if (typeof window === 'undefined') {
         return false;
@@ -65,9 +94,7 @@ const prefersDark = (): boolean => {
 };
 
 const handleSystemThemeChange = () => {
-    const currentAppearance = getStoredAppearance();
-
-    updateTheme(currentAppearance || 'system');
+    updateTheme(resolveInitialAppearance());
 };
 
 export function initializeTheme(): void {
@@ -75,25 +102,19 @@ export function initializeTheme(): void {
         return;
     }
 
-    // Initialize theme from saved preference or default to system...
-    const savedAppearance = getStoredAppearance();
-    updateTheme(savedAppearance || 'system');
+    updateTheme(resolveInitialAppearance());
 
     // Set up system theme change listener...
     mediaQuery()?.addEventListener('change', handleSystemThemeChange);
 }
 
-const appearance = ref<Appearance>('system');
+const appearance = ref<Appearance>(
+    typeof document !== 'undefined' ? resolveInitialAppearance() : 'system',
+);
 
 export function useAppearance(): UseAppearanceReturn {
     onMounted(() => {
-        const savedAppearance = localStorage.getItem(
-            'appearance',
-        ) as Appearance | null;
-
-        if (savedAppearance) {
-            appearance.value = savedAppearance;
-        }
+        appearance.value = resolveInitialAppearance();
     });
 
     const resolvedAppearance = computed<ResolvedAppearance>(() => {

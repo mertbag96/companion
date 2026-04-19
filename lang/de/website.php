@@ -59,6 +59,12 @@ return [
                 'blog' => 'Blog',
                 'help' => 'Hilfe-Center',
             ],
+            'theme' => [
+                'select_aria' => 'Farbschema wählen',
+                'light' => 'Hell',
+                'dark' => 'Dunkel',
+                'system' => 'System',
+            ],
             'actions' => [
                 'login' => 'Anmelden',
                 'get_started' => 'Loslegen',

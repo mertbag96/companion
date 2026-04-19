@@ -59,6 +59,12 @@ return [
                 'blog' => 'Blog',
                 'help' => 'Yardım merkezi',
             ],
+            'theme' => [
+                'select_aria' => 'Renk temasını seçin',
+                'light' => 'Açık',
+                'dark' => 'Koyu',
+                'system' => 'Sistem',
+            ],
             'actions' => [
                 'login' => 'Giriş yap',
                 'get_started' => 'Başlayın',

@@ -10,6 +10,15 @@ const props = defineProps<SelectValueProps>()
     data-slot="select-value"
     v-bind="props"
   >
-    <slot />
+    <template #default="slotProps">
+      <slot v-bind="slotProps">
+        <template v-if="slotProps.selectedLabel?.length">
+          {{ slotProps.selectedLabel.join(', ') }}
+        </template>
+        <template v-else>
+          {{ props.placeholder }}
+        </template>
+      </slot>
+    </template>
   </SelectValue>
 </template>
