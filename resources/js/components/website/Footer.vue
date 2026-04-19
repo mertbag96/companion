@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { Check, Globe } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,12 +10,25 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useLocaleSwitch } from '@/composables/useLocaleSwitch';
+import { useTranslations } from '@/composables/useTranslations';
+import { wfArgs } from '@/lib/wayfinderArgs';
+import { home } from '@/routes';
 
-const currentLanguage = ref('English');
+const page = usePage<{
+    locale: string;
+    locales: Record<string, string>;
+    url_route_defaults: Record<string, string>;
+}>();
 
-const changeLanguage = (locale: string) => {
-    currentLanguage.value = locale;
-};
+const { t } = useTranslations();
+const { switchLocale } = useLocaleSwitch();
+
+const year = new Date().getFullYear();
+
+const currentLanguageLabel = computed(
+    () => page.props.locales[page.props.locale] ?? page.props.locale,
+);
 </script>
 
 <template>
@@ -27,36 +40,36 @@ const changeLanguage = (locale: string) => {
                 <div class="flex flex-col gap-12 lg:flex-row lg:justify-between lg:gap-16">
                     <div class="max-w-2xs flex flex-col space-y-4">
                         <Link
-                            href="/"
+                            :href="home.url(wfArgs(page))"
                             class="text-foreground"
                         >
                             <AppLogo />
                         </Link>
                         <p class="text-sm leading-relaxed text-foreground/75">
-                            A modern companion for businesses that value simplicity, structure, and efficiency.
+                            {{ t('footer.tagline') }}
                         </p>
                     </div>
 
                     <div class="grid flex-1 grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-10">
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                Product
+                                {{ t('footer.columns.product.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Features
+                                        {{ t('footer.columns.product.links.features') }}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Pricing
+                                        {{ t('footer.columns.product.links.pricing') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -64,23 +77,23 @@ const changeLanguage = (locale: string) => {
 
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                Resources
+                                {{ t('footer.columns.resources.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Blog
+                                        {{ t('footer.columns.resources.links.blog') }}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Help center
+                                        {{ t('footer.columns.resources.links.help') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -88,23 +101,23 @@ const changeLanguage = (locale: string) => {
 
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                Company
+                                {{ t('footer.columns.company.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        About
+                                        {{ t('footer.columns.company.links.about') }}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Contact
+                                        {{ t('footer.columns.company.links.contact') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -112,23 +125,23 @@ const changeLanguage = (locale: string) => {
 
                         <div class="space-y-4">
                             <p class="text-xs font-semibold tracking-wide text-foreground uppercase">
-                                Legal
+                                {{ t('footer.columns.legal.label') }}
                             </p>
                             <ul class="space-y-3 text-sm text-foreground/70">
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Privacy policy
+                                        {{ t('footer.columns.legal.links.privacy') }}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link
-                                        href="/"
+                                        :href="home.url(wfArgs(page))"
                                         class="transition-colors hover:text-foreground"
                                     >
-                                        Terms of service
+                                        {{ t('footer.columns.legal.links.terms') }}
                                     </Link>
                                 </li>
                             </ul>
@@ -140,7 +153,7 @@ const changeLanguage = (locale: string) => {
             <div class="border-t border-border/60 py-6">
                 <div class="max-w-[92%] xl:max-w-6xl 2xl:max-w-7xl mx-auto gap-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between">
                     <p class="text-xs text-foreground/60">
-                        © 2026 Companion. All rights reserved.
+                        {{ t('footer.copyright', { year }) }}
                     </p>
 
                     <DropdownMenu class="">
@@ -151,7 +164,7 @@ const changeLanguage = (locale: string) => {
                                 class="relative w-32 py-2 px-4 cursor-pointer"
                             >
                                 <Globe class="size-4" />
-                                <span class="text-xs">{{ currentLanguage }}</span>
+                                <span class="text-xs">{{ currentLanguageLabel }}</span>
                             </Button>
                         </DropdownMenuTrigger>
 
@@ -161,57 +174,15 @@ const changeLanguage = (locale: string) => {
                             class="w-auto"
                         >
                             <DropdownMenuItem
-                                class="flex items-center justify-between cursor-pointer"
-                                @click="changeLanguage('English')"
+                                v-for="(label, code) in page.props.locales"
+                                :key="code"
+                                class="flex cursor-pointer items-center justify-between"
+                                @click="switchLocale(code)"
                             >
-                                <span class="text-xs">English</span>
+                                <span class="text-xs">{{ label }}</span>
                                 <Check
+                                    v-if="code === page.props.locale"
                                     class="size-4"
-                                    v-if="currentLanguage === 'English'"
-                                />
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                class="flex items-center justify-between cursor-pointer"
-                                @click="changeLanguage('Türkçe')"
-                            >
-                                <span class="text-xs">Türkçe</span>
-                                <Check
-                                    class="size-4"
-                                    v-if="currentLanguage === 'Türkçe'"
-                                />
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                class="flex items-center justify-between cursor-pointer"
-                                @click="changeLanguage('Français')"
-                            >
-                                <span class="text-xs">Français</span>
-                                <Check
-                                    class="size-4"
-                                    v-if="currentLanguage === 'Français'"
-                                />
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                class="flex items-center justify-between cursor-pointer"
-                                @click="changeLanguage('Deutsch')"
-                            >
-                                <span class="text-xs">Deutsch</span>
-                                <Check
-                                    class="size-4"
-                                    v-if="currentLanguage === 'Deutsch'"
-                                />
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                class="flex items-center justify-between cursor-pointer"
-                                @click="changeLanguage('Español')"
-                            >
-                                <span class="text-xs">Español</span>
-                                <Check
-                                    class="size-4"
-                                    v-if="currentLanguage === 'Español'"
                                 />
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -225,7 +196,7 @@ const changeLanguage = (locale: string) => {
                         class="w-full text-center font-black tracking-[-0.078em] text-foreground lowercase"
                         style="font-size: clamp(3.25rem, 17vw, 13.5rem); line-height: 0.88;"
                     >
-                        companion.
+                        {{ t('footer.brand') }}
                     </p>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 
@@ -16,13 +17,15 @@ defineOptions({
         description: 'Enter your details below to create your account',
     },
 });
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
     <Head title="Register" />
 
     <Form
-        v-bind="store.form()"
+        v-bind="store.form(wfArgs(page))"
         :reset-on-success="['password', 'password_confirmation']"
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
@@ -98,7 +101,7 @@ defineOptions({
         <div class="text-center text-sm text-muted-foreground">
             Already have an account?
             <TextLink
-                :href="login()"
+                :href="login(wfArgs(page))"
                 class="underline underline-offset-4"
                 :tabindex="6"
                 >Log in</TextLink

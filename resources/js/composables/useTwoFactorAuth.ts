@@ -1,6 +1,7 @@
-import { useHttp } from '@inertiajs/vue3';
+import { useHttp, usePage } from '@inertiajs/vue3';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 
 export type UseTwoFactorAuthReturn = {
@@ -29,10 +30,11 @@ const hasSetupData = computed<boolean>(
 
 export const useTwoFactorAuth = (): UseTwoFactorAuthReturn => {
     const http = useHttp();
+    const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 
     const fetchQrCode = async (): Promise<void> => {
         try {
-            const { svg } = (await http.submit(qrCode())) as {
+            const { svg } = (await http.submit(qrCode(wfArgs(page)))) as {
                 svg: string;
                 url: string;
             };
@@ -46,7 +48,7 @@ export const useTwoFactorAuth = (): UseTwoFactorAuthReturn => {
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const { secretKey: key } = (await http.submit(secretKey())) as {
+            const { secretKey: key } = (await http.submit(secretKey(wfArgs(page)))) as {
                 secretKey: string;
             };
 
@@ -77,7 +79,7 @@ export const useTwoFactorAuth = (): UseTwoFactorAuthReturn => {
         try {
             clearErrors();
             recoveryCodesList.value = (await http.submit(
-                recoveryCodes(),
+                recoveryCodes(wfArgs(page)),
             )) as string[];
         } catch {
             errors.value.push('Failed to fetch recovery codes');

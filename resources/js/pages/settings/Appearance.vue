@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import AppearanceTabs from '@/components/AppearanceTabs.vue';
 import Heading from '@/components/Heading.vue';
+import { wfArgsStatic } from '@/lib/wayfinderArgs';
 import { edit } from '@/routes/appearance';
 
 defineOptions({
@@ -9,7 +10,7 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Appearance settings',
-                href: edit(),
+                href: edit(wfArgsStatic()),
             },
         ],
     },

@@ -1,6 +1,9 @@
 <?php
 
+use App\Support\LocalizedRoutePaths;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\URL;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Tests\TestCase;
 
 /*
@@ -17,6 +20,17 @@ use Tests\TestCase;
 pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
     ->in('Feature');
+
+pest()->extend(TestCase::class)
+    ->in('Unit');
+
+pest()->beforeEach(function (): void {
+    LaravelLocalization::setLocale('en');
+    URL::defaults(array_merge(
+        ['locale' => 'en'],
+        LocalizedRoutePaths::urlDefaultsForLocale('en'),
+    ));
+})->in('Feature');
 
 /*
 |--------------------------------------------------------------------------

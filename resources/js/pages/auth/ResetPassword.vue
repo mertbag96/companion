@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { update } from '@/routes/password';
 
 defineOptions({
@@ -22,13 +23,15 @@ const props = defineProps<{
 }>();
 
 const inputEmail = ref(props.email);
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
     <Head title="Reset password" />
 
     <Form
-        v-bind="update.form()"
+        v-bind="update.form(wfArgs(page))"
         :transform="(data) => ({ ...data, token, email })"
         :reset-on-success="['password', 'password_confirmation']"
         v-slot="{ errors, processing }"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import { LogOut, Settings } from 'lucide-vue-next';
 import {
     DropdownMenuGroup,
@@ -8,6 +8,7 @@ import {
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import UserInfo from '@/components/UserInfo.vue';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
@@ -21,6 +22,8 @@ const handleLogout = () => {
 };
 
 defineProps<Props>();
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
@@ -32,7 +35,7 @@ defineProps<Props>();
     <DropdownMenuSeparator />
     <DropdownMenuGroup>
         <DropdownMenuItem :as-child="true">
-            <Link class="block w-full cursor-pointer" :href="edit()" prefetch>
+            <Link class="block w-full cursor-pointer" :href="edit(wfArgs(page))" prefetch>
                 <Settings class="mr-2 h-4 w-4" />
                 Settings
             </Link>
@@ -42,7 +45,7 @@ defineProps<Props>();
     <DropdownMenuItem :as-child="true">
         <Link
             class="block w-full cursor-pointer"
-            :href="logout()"
+            :href="logout(wfArgs(page))"
             @click="handleLogout"
             as="button"
             data-test="logout-button"

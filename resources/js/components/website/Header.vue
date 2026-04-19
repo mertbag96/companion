@@ -1,18 +1,25 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { onWatcherCleanup, ref, watch } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from '@/composables/useTranslations';
+import { wfArgs } from '@/lib/wayfinderArgs';
+import { home, login, register } from '@/routes';
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
+
+const { t } = useTranslations();
 
 const isMenuOpen = ref(false);
 
 const toggleMenu = (): void => {
     isMenuOpen.value = !isMenuOpen.value;
-}
+};
 
 const closeMenu = (): void => {
     isMenuOpen.value = false;
-}
+};
 
 watch(isMenuOpen, (open) => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -23,63 +30,64 @@ watch(isMenuOpen, (open) => {
 </script>
 
 <template>
-    <header
-        class="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/75"
-    >
+    <header class="sticky top-0 z-50">
         <div
-            class="max-w-[92%] xl:max-w-6xl 2xl:max-w-7xl h-16 mx-auto flex items-center justify-between gap-4"
+            class="border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/75"
         >
-            <Link
-                href="/"
-                class="text-foreground"
-            >
-                <AppLogo />
-            </Link>
-
-            <nav
-                class="hidden shrink md:flex items-center gap-6 xl:gap-8"
-                aria-label="Main"
-            >
-                <Link
-                    href="/"
-                    prefetch
-                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Features
-                </Link>
-                <Link
-                    href="/"
-                    prefetch
-                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Pricing
-                </Link>
-                <Link
-                    href="/"
-                    prefetch
-                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    About
-                </Link>
-                <Link
-                    href="/"
-                    prefetch
-                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Blog
-                </Link>
-                <Link
-                    href="/"
-                    prefetch
-                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Help center
-                </Link>
-            </nav>
-
             <div
-                class="shrink-0 flex items-center gap-2 sm:gap-3"
+                class="max-w-[92%] xl:max-w-6xl 2xl:max-w-7xl mx-auto flex h-16 items-center justify-between gap-4"
             >
+                <Link
+                    :href="home.url(wfArgs(page))"
+                    class="text-foreground"
+                >
+                    <AppLogo />
+                </Link>
+
+                <nav
+                    class="hidden shrink md:flex items-center gap-6 xl:gap-8"
+                    aria-label="Main"
+                >
+                <Link
+                    :href="home.url(wfArgs(page))"
+                    prefetch
+                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    {{ t('header.nav.features') }}
+                </Link>
+                <Link
+                    :href="home.url(wfArgs(page))"
+                    prefetch
+                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    {{ t('header.nav.pricing') }}
+                </Link>
+                <Link
+                    :href="home.url(wfArgs(page))"
+                    prefetch
+                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    {{ t('header.nav.about') }}
+                </Link>
+                <Link
+                    :href="home.url(wfArgs(page))"
+                    prefetch
+                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    {{ t('header.nav.blog') }}
+                </Link>
+                <Link
+                    :href="home.url(wfArgs(page))"
+                    prefetch
+                    class="whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    {{ t('header.nav.help') }}
+                </Link>
+                </nav>
+
+                <div
+                    class="shrink-0 flex items-center gap-2 sm:gap-3"
+                >
                 <Button
                     variant="outline"
                     size="default"
@@ -87,10 +95,10 @@ watch(isMenuOpen, (open) => {
                     class="hidden md:block"
                 >
                     <Link
-                        href="/"
+                        :href="login.url(wfArgs(page))"
                         prefetch
                     >
-                        Log in
+                        {{ t('header.actions.login') }}
                     </Link>
                 </Button>
 
@@ -99,10 +107,10 @@ watch(isMenuOpen, (open) => {
                     as-child
                 >
                     <Link
-                        href="/"
+                        :href="register.url(wfArgs(page))"
                         prefetch
                     >
-                        Get started
+                        {{ t('header.actions.get_started') }}
                     </Link>
                 </Button>
 
@@ -111,7 +119,7 @@ watch(isMenuOpen, (open) => {
                         variant="outline"
                         size="default"
                         type="button"
-                        class="w-10 h-10 shrink-0 p-0 cursor-pointer"
+                        class="h-10 w-10 shrink-0 cursor-pointer p-0"
                         :aria-expanded="isMenuOpen"
                         aria-controls="mobile-menu"
                         aria-label="Menu"
@@ -141,69 +149,67 @@ watch(isMenuOpen, (open) => {
                         </span>
                     </Button>
                 </div>
+                </div>
             </div>
         </div>
 
-        <Teleport to="body">
-            <div
-                v-show="isMenuOpen"
-                id="mobile-menu"
-                class="fixed inset-0 z-40 flex min-h-dvh w-full flex-col bg-background/95 backdrop-blur-md supports-backdrop-filter:bg-background/90 md:hidden"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Mobile navigation"
+        <div
+            v-show="isMenuOpen"
+            id="mobile-menu"
+            class="fixed inset-0 z-40 flex min-h-dvh w-full flex-col bg-background/95 backdrop-blur-md supports-backdrop-filter:bg-background/90 md:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+        >
+            <div class="h-16 shrink-0" aria-hidden="true" />
+            <nav
+                class="mx-auto flex w-[92%] flex-1 flex-col justify-between pb-8 pt-4 font-medium text-muted-foreground"
+                aria-label="Main mobile"
             >
-                <div class="h-16 shrink-0" aria-hidden="true" />
-                <nav
-                    class="w-[92%] mx-auto flex flex-1 flex-col justify-between pb-8 pt-4 font-medium text-muted-foreground"
-                    aria-label="Main mobile"
-                >
-                    <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1">
                         <Link
-                            href="/"
+                            :href="home.url(wfArgs(page))"
                             prefetch
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            Features
+                            {{ t('header.nav.features') }}
                         </Link>
                         <Link
-                            href="/"
+                            :href="home.url(wfArgs(page))"
                             prefetch
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            Pricing
+                            {{ t('header.nav.pricing') }}
                         </Link>
                         <Link
-                            href="/"
+                            :href="home.url(wfArgs(page))"
                             prefetch
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            About
+                            {{ t('header.nav.about') }}
                         </Link>
                         <Link
-                            href="/"
+                            :href="home.url(wfArgs(page))"
                             prefetch
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            Blog
+                            {{ t('header.nav.blog') }}
                         </Link>
                         <Link
-                            href="/"
+                            :href="home.url(wfArgs(page))"
                             prefetch
                             class="py-2.5 transition-colors hover:text-foreground"
                             @click="closeMenu"
                         >
-                            Help center
+                            {{ t('header.nav.help') }}
                         </Link>
-                    </div>
+                </div>
 
-                    <div
-                        class="flex flex-col gap-4"
-                    >
+                <div class="flex flex-col gap-4">
                         <Button
                             variant="outline"
                             size="default"
@@ -211,11 +217,11 @@ watch(isMenuOpen, (open) => {
                             as-child
                         >
                             <Link
-                                href="/"
+                                :href="login.url(wfArgs(page))"
                                 prefetch
                                 @click="closeMenu"
                             >
-                                Log in
+                                {{ t('header.actions.login') }}
                             </Link>
                         </Button>
                         <Button
@@ -224,16 +230,15 @@ watch(isMenuOpen, (open) => {
                             as-child
                         >
                             <Link
-                                href="/"
+                                :href="register.url(wfArgs(page))"
                                 prefetch
                                 @click="closeMenu"
                             >
-                                Get started
+                                {{ t('header.actions.get_started') }}
                             </Link>
                         </Button>
-                    </div>
-                </nav>
-            </div>
-        </Teleport>
+                </div>
+            </nav>
+        </div>
     </header>
 </template>

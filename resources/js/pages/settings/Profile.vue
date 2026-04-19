@@ -8,6 +8,7 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { wfArgs, wfArgsStatic } from '@/lib/wayfinderArgs';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
 
@@ -23,13 +24,13 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Profile settings',
-                href: edit(),
+                href: edit(wfArgsStatic()),
             },
         ],
     },
 });
 
-const page = usePage();
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 const user = computed(() => page.props.auth.user);
 </script>
 
@@ -46,7 +47,7 @@ const user = computed(() => page.props.auth.user);
         />
 
         <Form
-            v-bind="ProfileController.update.form()"
+            v-bind="ProfileController.update.form(wfArgs(page))"
             class="space-y-6"
             v-slot="{ errors, processing }"
         >
@@ -83,7 +84,7 @@ const user = computed(() => page.props.auth.user);
                 <p class="-mt-4 text-sm text-muted-foreground">
                     Your email address is unverified.
                     <Link
-                        :href="send()"
+                        :href="send(wfArgs(page))"
                         as="button"
                         class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                     >

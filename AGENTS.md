@@ -42,6 +42,18 @@ This project has domain-specific skills available. You MUST activate the relevan
 - `inertia-vue-development` — Develops Inertia.js v3 Vue client-side applications. Activates when creating Vue pages, forms, or navigation; using <Link>, <Form>, useForm, useHttp, setLayoutProps, or router; working with deferred props, prefetching, optimistic updates, instant visits, or polling; or when user mentions Vue with Inertia, Vue pages, Vue forms, or Vue navigation.
 - `tailwindcss-development` — Always invoke when the user's message includes 'tailwind' in any form. Also invoke for: building responsive grid layouts (multi-column card grids, product grids), flex/grid page structures (dashboards with sidebars, fixed topbars, mobile-toggle navs), styling UI components (cards, tables, navbars, pricing sections, forms, inputs, badges), adding dark mode variants, fixing spacing or typography, and Tailwind v3/v4 work. The core use case: writing or fixing Tailwind utility classes in HTML templates (Blade, JSX, Vue). Skip for backend PHP logic, database queries, API routes, JavaScript with no HTML/CSS component, CSS file audits, build tool configuration, and vanilla CSS.
 
+## Project Localization (Mandatory Reference)
+
+This application uses **mcamara/laravel-localization**, **translated URL path segments**, **Inertia (Vue)**, **Laravel Wayfinder**, and shared **`lang/{locale}`** files. **Before planning, implementing, or reviewing** any work that **adds, changes, or removes** anything in the following areas, **read and follow** the repository guide:
+
+- **`LOCALIZATION.md`** (at the **repository root**)
+
+**Triggers (non-exhaustive):** new or renamed routes or slugs; Fortify/auth URLs; `lang/*` PHP files; locale list or `config/laravellocalization.php`; `LocalizedRoutePaths`; Inertia `translations` / `useTranslations()`; language switcher; `wfArgs` / Wayfinder; tests that call `route()` with localized parameters; SSR/hydration around locale.
+
+**Audience:** human maintainers, reviewers, **and any AI coding agent**—treat **`LOCALIZATION.md`** as the single workflow source of truth for this stack. If you change how localization works in code, **update `LOCALIZATION.md`** in the same change so the guide stays accurate.
+
+**Related skills:** `laravel-best-practices` (routes, PHP), `wayfinder-development` (generated TS routes), `inertia-vue-development` (Vue + shared props); auth/Fortify routes also involve `fortify-development`.
+
 ## Conventions
 
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
@@ -64,6 +76,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 ## Documentation Files
 
 - You must only create documentation files if explicitly requested by the user.
+- **Localization exception:** For **any** localization- or language-related task (see **Project localization** above), you **must** consult and follow **`LOCALIZATION.md`** at the repo root. Prefer updating that file when the documented workflow changes, rather than inventing ad hoc steps in chat.
 
 ## Replies
 

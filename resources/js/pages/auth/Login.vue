@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
@@ -24,6 +25,8 @@ defineProps<{
     canResetPassword: boolean;
     canRegister: boolean;
 }>();
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
@@ -37,7 +40,7 @@ defineProps<{
     </div>
 
     <Form
-        v-bind="store.form()"
+        v-bind="store.form(wfArgs(page))"
         :reset-on-success="['password']"
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
@@ -63,7 +66,7 @@ defineProps<{
                     <Label for="password">Password</Label>
                     <TextLink
                         v-if="canResetPassword"
-                        :href="request()"
+                        :href="request(wfArgs(page))"
                         class="text-sm"
                         :tabindex="5"
                     >
@@ -105,7 +108,7 @@ defineProps<{
             v-if="canRegister"
         >
             Don't have an account?
-            <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
+            <TextLink :href="register(wfArgs(page))" :tabindex="5">Sign up</TextLink>
         </div>
     </Form>
 </template>

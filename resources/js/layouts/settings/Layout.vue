@@ -1,29 +1,33 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { toUrl } from '@/lib/utils';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit as editProfile } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import type { NavItem } from '@/types';
 
-const sidebarNavItems: NavItem[] = [
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
+
+const sidebarNavItems = computed<NavItem[]>(() => [
     {
         title: 'Profile',
-        href: editProfile(),
+        href: editProfile(wfArgs(page)),
     },
     {
         title: 'Security',
-        href: editSecurity(),
+        href: editSecurity(wfArgs(page)),
     },
     {
         title: 'Appearance',
-        href: editAppearance(),
+        href: editAppearance(wfArgs(page)),
     },
-];
+]);
 
 const { isCurrentOrParentUrl } = useCurrentUrl();
 </script>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
 
@@ -17,6 +18,8 @@ defineOptions({
 defineProps<{
     status?: string;
 }>();
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
@@ -31,7 +34,7 @@ defineProps<{
     </div>
 
     <Form
-        v-bind="send.form()"
+        v-bind="send.form(wfArgs(page))"
         class="space-y-6 text-center"
         v-slot="{ processing }"
     >
@@ -40,7 +43,7 @@ defineProps<{
             Resend verification email
         </Button>
 
-        <TextLink :href="logout()" as="button" class="mx-auto block text-sm">
+        <TextLink :href="logout(wfArgs(page))" as="button" class="mx-auto block text-sm">
             Log out
         </TextLink>
     </Form>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
+import { useTranslations } from '@/composables/useTranslations';
 
 withDefaults(
     defineProps<{
@@ -9,11 +10,16 @@ withDefaults(
         canRegister: true,
     },
 );
+
+const { t } = useTranslations();
 </script>
 
 <template>
-    <Head title="Your business companion for everyday operations." />
-    <div class="py-32 w-full flex items-center justify-center">
-        <h1 class="text-2xl font-bold text-center">Homepage</h1>
+    <Head :title="t('website.meta.title')" />
+
+    <div class="flex w-full items-center justify-center py-32">
+        <h1 class="text-center text-2xl font-bold">
+            {{ t('website.home.heading') }}
+        </h1>
     </div>
 </template>

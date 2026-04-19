@@ -19,6 +19,11 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            locale: string;
+            fallback_locale: string;
+            locales: Record<string, string>;
+            locale_urls: Record<string, string>;
+            url_route_defaults: Record<string, string>;
             [key: string]: unknown;
         };
     }

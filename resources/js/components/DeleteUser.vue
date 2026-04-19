@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form } from '@inertiajs/vue3';
+import { Form, usePage } from '@inertiajs/vue3';
 import { useTemplateRef } from 'vue';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/Heading.vue';
@@ -17,7 +17,9 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { wfArgs } from '@/lib/wayfinderArgs';
 
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 const passwordInput = useTemplateRef('passwordInput');
 </script>
 
@@ -45,7 +47,7 @@ const passwordInput = useTemplateRef('passwordInput');
                 </DialogTrigger>
                 <DialogContent>
                     <Form
-                        v-bind="ProfileController.destroy.form()"
+                        v-bind="ProfileController.destroy.form(wfArgs(page))"
                         reset-on-success
                         @error="() => passwordInput?.focus()"
                         :options="{

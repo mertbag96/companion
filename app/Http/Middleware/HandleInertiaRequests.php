@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\LocalizedRoutePaths;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -42,6 +44,16 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'locale' => fn () => app()->getLocale(),
+            'fallback_locale' => fn () => config('app.fallback_locale'),
+            'locales' => fn () => config('locales.supported'),
+            'locale_urls' => fn () => collect(LaravelLocalization::getSupportedLanguagesKeys())
+                ->mapWithKeys(fn (string $loc): array => [$loc => LaravelLocalization::getLocalizedURL($loc)])
+                ->all(),
+            'url_route_defaults' => fn () => array_merge(
+                ['locale' => app()->getLocale()],
+                LocalizedRoutePaths::urlDefaultsForLocale(app()->getLocale()),
+            ),
         ];
     }
 }

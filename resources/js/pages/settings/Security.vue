@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
 import { ShieldCheck } from 'lucide-vue-next';
 import { onUnmounted, ref } from 'vue';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
@@ -11,6 +11,7 @@ import TwoFactorSetupModal from '@/components/TwoFactorSetupModal.vue';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
+import { wfArgs, wfArgsStatic } from '@/lib/wayfinderArgs';
 import { edit } from '@/routes/security';
 import { disable, enable } from '@/routes/two-factor';
 
@@ -31,11 +32,13 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Security settings',
-                href: edit(),
+                href: edit(wfArgsStatic()),
             },
         ],
     },
 });
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 
 const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth();
 const showSetupModal = ref<boolean>(false);
@@ -56,7 +59,7 @@ onUnmounted(() => clearTwoFactorAuthData());
         />
 
         <Form
-            v-bind="SecurityController.update.form()"
+            v-bind="SecurityController.update.form(wfArgs(page))"
             :options="{
                 preserveScroll: true,
             }"
@@ -139,7 +142,7 @@ onUnmounted(() => clearTwoFactorAuthData());
                 </Button>
                 <Form
                     v-else
-                    v-bind="enable.form()"
+                    v-bind="enable.form(wfArgs(page))"
                     @success="showSetupModal = true"
                     #default="{ processing }"
                 >
@@ -158,7 +161,7 @@ onUnmounted(() => clearTwoFactorAuthData());
             </p>
 
             <div class="relative inline">
-                <Form v-bind="disable.form()" #default="{ processing }">
+                <Form v-bind="disable.form(wfArgs(page))" #default="{ processing }">
                     <Button
                         variant="destructive"
                         type="submit"

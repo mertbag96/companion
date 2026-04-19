@@ -50,6 +50,8 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        $locale = app()->getLocale();
+
         Auth::logout();
 
         $user->delete();
@@ -57,6 +59,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('home', ['locale' => $locale]);
     }
 }

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
 
@@ -19,6 +20,8 @@ defineOptions({
 defineProps<{
     status?: string;
 }>();
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
@@ -32,7 +35,7 @@ defineProps<{
     </div>
 
     <div class="space-y-6">
-        <Form v-bind="email.form()" v-slot="{ errors, processing }">
+        <Form v-bind="email.form(wfArgs(page))" v-slot="{ errors, processing }">
             <div class="grid gap-2">
                 <Label for="email">Email address</Label>
                 <Input
@@ -60,7 +63,7 @@ defineProps<{
 
         <div class="space-x-1 text-center text-sm text-muted-foreground">
             <span>Or, return to</span>
-            <TextLink :href="login()">log in</TextLink>
+            <TextLink :href="login(wfArgs(page))">log in</TextLink>
         </div>
     </div>
 </template>

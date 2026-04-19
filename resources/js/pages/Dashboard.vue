@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { wfArgsStatic } from '@/lib/wayfinderArgs';
 import { dashboard } from '@/routes';
 
 defineOptions({
@@ -8,7 +9,7 @@ defineOptions({
         breadcrumbs: [
             {
                 title: 'Dashboard',
-                href: dashboard(),
+                href: dashboard(wfArgsStatic()),
             },
         ],
     },

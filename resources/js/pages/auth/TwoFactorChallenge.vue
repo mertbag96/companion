@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head, setLayoutProps } from '@inertiajs/vue3';
+import { Form, Head, setLayoutProps, usePage } from '@inertiajs/vue3';
 import { computed, ref, watchEffect } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { store } from '@/routes/two-factor/login';
 import type { TwoFactorConfigContent } from '@/types';
 
@@ -46,6 +47,8 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
 };
 
 const code = ref<string>('');
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 </script>
 
 <template>
@@ -54,7 +57,7 @@ const code = ref<string>('');
     <div class="space-y-6">
         <template v-if="!showRecoveryInput">
             <Form
-                v-bind="store.form()"
+                v-bind="store.form(wfArgs(page))"
                 class="space-y-4"
                 reset-on-error
                 @error="code = ''"
@@ -101,7 +104,7 @@ const code = ref<string>('');
 
         <template v-else>
             <Form
-                v-bind="store.form()"
+                v-bind="store.form(wfArgs(page))"
                 class="space-y-4"
                 reset-on-error
                 #default="{ errors, processing, clearErrors }"

@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import { wfArgs } from '@/lib/wayfinderArgs';
 import { home } from '@/routes';
+
+const page = usePage<{ locale: string; url_route_defaults: Record<string, string> }>();
 
 defineProps<{
     title?: string;
@@ -17,7 +20,7 @@ defineProps<{
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col items-center gap-4">
                     <Link
-                        :href="home()"
+                        :href="home(wfArgs(page))"
                         class="flex flex-col items-center gap-2 font-medium"
                     >
                         <div
