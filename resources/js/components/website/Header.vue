@@ -48,7 +48,7 @@ watch(isMenuOpen, (open) => {
 <template>
     <header class="sticky top-0 z-50">
         <div
-            class="border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/75"
+            class="relative z-50 border-b border-border/60 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/75"
         >
             <div
                 class="max-w-[92%] xl:max-w-6xl 2xl:max-w-7xl mx-auto flex h-16 items-center justify-between gap-4"
@@ -228,7 +228,7 @@ watch(isMenuOpen, (open) => {
         <div
             v-show="isMenuOpen"
             id="mobile-menu"
-            class="fixed inset-0 z-40 flex min-h-dvh w-full flex-col bg-background/95 backdrop-blur-md supports-backdrop-filter:bg-background/90 md:hidden"
+            class="fixed inset-0 z-40 flex min-h-dvh w-full flex-col bg-background md:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
