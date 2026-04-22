@@ -18,7 +18,19 @@ const { t } = useTranslations();
                         {{ t('website.meta.description') }}
                     </p>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center space-x-4">
+                    <Button
+                        size="lg"
+                        as-child
+                        variant="outline"
+                    >
+                        <Link
+                            href="/"
+                            prefetch
+                        >
+                            {{ t('website.layout.header.nav.pricing') }}
+                        </Link>
+                    </Button>
                     <Button
                         size="lg"
                         as-child
